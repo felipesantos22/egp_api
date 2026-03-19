@@ -9,10 +9,10 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 #MySql
 #DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/dbegp"
-DATABASE_URL = "mysql+pymysql://root@localhost:3306/dbegp"
+#DATABASE_URL = "mysql+pymysql://root@localhost:3306/dbegp"
 
-engine = create_engine(DATABASE_URL, echo=True)
+#engine = create_engine(DATABASE_URL, echo=True)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+#SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+#Base = declarative_base()
