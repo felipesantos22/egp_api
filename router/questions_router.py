@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter
 from openai import OpenAI
 from cdb import get_collection
@@ -5,13 +6,16 @@ from schema.questions_schema import QuestionRequest
 
 router = APIRouter(prefix="/questions", tags=["Questions"])
 
-client = OpenAI()
+
+def get_client():
+    return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 @router.post("/")
 def ask(data: QuestionRequest):
-    question = data.question
+    client = get_client()
 
+    question = data.question
     collection = get_collection()
 
     emb = client.embeddings.create(
@@ -27,6 +31,7 @@ def ask(data: QuestionRequest):
     context = "\n".join(results["documents"][0])
 
     print("CONTEXT:", context)
+
     response = client.responses.create(
         model="gpt-4.1-mini",
         input=f"""
@@ -37,7 +42,7 @@ def ask(data: QuestionRequest):
 
         Questions:
         {question}
-           """
+        """
     )
 
     return {"answer": response.output_text}
