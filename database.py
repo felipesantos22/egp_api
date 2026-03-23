@@ -1,17 +1,25 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-#Postgress
-#DATABASE_URL = "postgresql+psycopg2://postgres:postgres@localhost:5432/dbegp"
+# Postgress
+# DATABASE_URL = "postgresql+psycopg2://postgres:postgres@localhost:5432/name"
 
-#SQLite
-#DATABASE_URL = "sqlite:///database.db"
+# SQLite
+# DATABASE_URL = "sqlite:///database.db"
 
-#MySql
-#DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/dbegp"
-DATABASE_URL = "mysql+pymysql://root@localhost:3306/dbegp"
+# MySql
+# DATABASE_URL = "mysql+pymysql://root:123456@localhost:3306/name"
 
-engine = create_engine(DATABASE_URL, echo=True)
+database_url = os.getenv("MYSQL_PUBLIC_URL")
+
+if database_url and database_url.startswith("mysql://"):
+    database_url = database_url.replace("mysql://", "mysql+pymysql://", 1)
+
+if not database_url:
+    database_url = "mysql+pymysql://root@localhost:3306/dbegp"
+
+engine = create_engine(database_url, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
