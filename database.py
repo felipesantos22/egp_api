@@ -16,8 +16,8 @@ database_url = os.getenv("MYSQL_PUBLIC_URL")
 if database_url and database_url.startswith("mysql://"):
     database_url = database_url.replace("mysql://", "mysql+pymysql://", 1)
 
-if not database_url:
-    database_url = "mysql+pymysql://root@localhost:3306/dbegp"
+#if not database_url:
+    #database_url = "mysql+pymysql://root@localhost:3306/dbegp"
 
 engine = create_engine(database_url, echo=True)
 
