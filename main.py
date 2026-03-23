@@ -9,8 +9,6 @@ from database import Base, engine
 
 from router.package_router import router as controller_router
 
-from router.questions_router import router as questions_router
-
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Project Traveller")
@@ -24,7 +22,6 @@ app.add_middleware(
 )
 
 app.include_router(controller_router)
-app.include_router(questions_router)
 
-#if __name__ == "__main__":
-    #uvicorn.run(app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
